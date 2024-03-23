@@ -19,34 +19,13 @@ func CommentGetAll(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "comment not found",
+			"error":   "Not Found",
+			"message": "Uppss.. comment not found",
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, Comments)
-}
-
-func CommentGet(c *gin.Context) {
-	db := database.GetDB()
-	userData := c.MustGet("userData").(jwt.MapClaims)
-	Comments := []models.Comment{}
-	userID := uint(userData["id"].(float64))
-
-	//return all comments by user
-	err := db.Debug().Model(&models.Comment{}).Where("user_id = ?", userID).Find(&Comments).Error
-
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "comment not found",
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, Comments)
-
 }
 
 func CommentCreate(c *gin.Context) {
@@ -67,8 +46,8 @@ func CommentCreate(c *gin.Context) {
 	errPhoto := db.First(&Photo, Comment.PhotoID).Error
 	if errPhoto != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "photo not found",
+			"error":   "Not Found",
+			"message": "Uppss.. comment not found",
 		})
 		return
 	}
@@ -78,7 +57,7 @@ func CommentCreate(c *gin.Context) {
 	errComment := db.Create(&Comment).Error
 	if errComment != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "BAD REQUEST",
+			"error":   "Bad Request",
 			"message": errComment.Error(),
 		})
 		return
@@ -111,7 +90,7 @@ func CommentUpdate(c *gin.Context) {
 	).Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "BAD REQUEST",
+			"error":   "Bad Request",
 			"message": err.Error(),
 		})
 		return
@@ -139,8 +118,8 @@ func CommentDelete(c *gin.Context) {
 	err := db.Where("id = ? AND user_id = ?", commentID, userID).Delete(&models.Comment{}).Error
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": err.Error(),
+			"error":   "Not Found",
+			"message": "Uppss.. comment not found",
 		})
 		return
 	}

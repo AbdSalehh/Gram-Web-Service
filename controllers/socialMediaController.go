@@ -19,8 +19,8 @@ func SocialMediaGetAll(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "social media not found",
+			"error":   "Not Found",
+			"message": "Uppss.. social media not found",
 		})
 		return
 	}
@@ -28,26 +28,6 @@ func SocialMediaGetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, SocialMedia)
 }
 
-func SocialMediaGet(c *gin.Context) {
-	db := database.GetDB()
-	userData := c.MustGet("userData").(jwt.MapClaims)
-	SocialMedia := []models.SocialMedia{}
-	userID := uint(userData["id"].(float64))
-
-	//return all social media by user
-	err := db.Debug().Model(&models.SocialMedia{}).Where("user_id = ?", userID).Find(&SocialMedia).Error
-
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "social media not found",
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, SocialMedia)
-
-}
 
 func SocialMediaCreate(c *gin.Context) {
 	db := database.GetDB()
@@ -69,7 +49,7 @@ func SocialMediaCreate(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "BAD REQUEST",
+			"error":   "Bad Request",
 			"message": err.Error(),
 		})
 		return
@@ -103,7 +83,7 @@ func SocialMediaUpdate(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "BAD REQUEST",
+			"error":   "Bad Request",
 			"message": err.Error(),
 		})
 		return
@@ -128,8 +108,8 @@ func SocialMediaDelete(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "social media not found",
+			"error":   "Not Found",
+			"message": "Uppss.. social media not found",
 		})
 		return
 	}

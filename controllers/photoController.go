@@ -12,48 +12,43 @@ import (
 )
 
 func PhotoGetAll(c *gin.Context) {
-
 	db := database.GetDB()
 	Photos := []models.Photo{}
 
-	err := db.Debug().Model(&models.Photo{}).Find(&Photos).Error
+	err := db.Debug().Model(&models.Photo{}).Preload("User").Find(&Photos).Error
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "photo not found",
+			"error":   "Not Found",
+			"message": "Uppss.. Photo not found",
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, Photos)
-}
-
-func PhotoGet(c *gin.Context) {
-	db := database.GetDB()
-	userData := c.MustGet("userData").(jwt.MapClaims)
-	Photos := []models.Photo{}
-	userID := uint(userData["id"].(float64))
-
-	err := db.Debug().Model(&models.Photo{}).Where("user_id = ?", userID).Find(&Photos).Error
-
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "photo not found",
-		})
-		return
+	// Membuat slice baru untuk menyimpan respons tanpa informasi pengguna
+	var photoResponses []gin.H
+	for _, photo := range Photos {
+		photoResponse := gin.H{
+			"id":         photo.ID,
+			"title":      photo.Title,
+			"caption":    photo.Caption,
+			"photo_url":  photo.PhotoURL,
+			"user_id":    photo.UserID,
+			"created_at": photo.CreatedAt,
+			"updated_at": photo.UpdatedAt,
+		}
+		photoResponses = append(photoResponses, photoResponse)
 	}
 
-	c.JSON(http.StatusOK, Photos)
+	c.JSON(http.StatusOK, photoResponses)
 }
 
 func PhotoCreate(c *gin.Context) {
 	db := database.GetDB()
 	userData := c.MustGet("userData").(jwt.MapClaims)
 	contentType := helpers.GetContentType(c)
-
 	Photo := models.Photo{}
+
 	userID := uint(userData["id"].(float64))
 
 	if contentType == appJSON {
@@ -69,7 +64,7 @@ func PhotoCreate(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest,
 			gin.H{
-				"error":   "BAD REQUEST",
+				"error":   "Bad Request",
 				"message": err.Error(),
 			})
 		return
@@ -128,8 +123,8 @@ func PhotoDelete(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error":   "NOT FOUND",
-			"message": "photo not found",
+			"error":   "Not Found",
+			"message": "Uppss.. Photo not found",
 		})
 		return
 	}

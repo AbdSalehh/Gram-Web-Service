@@ -11,6 +11,7 @@ type Photo struct {
 	Caption  string    `json:"caption" form:"caption"`
 	PhotoURL string    `gorm:"not null" json:"photo_url" form:"photo_url" valid:"required~URL of your photo is required"`
 	UserID   uint      `gorm:"not null" json:"user_id"`
+	User     User      `gorm:"foreignkey:UserID" json:"user"`
 	Comments []Comment `gorm:"constraint:OnUpdate:CASCADE, OnDelete:SET NULL;" json:"comments"`
 }
 
