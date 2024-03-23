@@ -24,7 +24,7 @@ func UserAuthorization() gin.HandlerFunc {
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 				"error":   "Not Found",
-				"message": "User not found",
+				"message": "Uppss.. User not found",
 			})
 			return
 		}
@@ -41,7 +41,7 @@ func PhotoAuthorization() gin.HandlerFunc {
 
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-				"error":   "INVALID REQUEST",
+				"error":   "INVALID Request",
 				"message": "Parameter is not valid",
 			})
 			return
@@ -55,15 +55,15 @@ func PhotoAuthorization() gin.HandlerFunc {
 
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
-				"error":   "NOT FOUND",
-				"message": "Photo not found",
+				"error":   "Not Found",
+				"message": "Uppss.. Photo not found",
 			})
 			return
 		}
 
 		if photo.UserID != userID {
 			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
-				"error":   "ACCESS DENIED",
+				"error":   "Access Denied",
 				"message": "You are not authorized to perform this action",
 			})
 			return
@@ -81,7 +81,7 @@ func CommentAuthorization() gin.HandlerFunc {
 
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-				"error":   "INVALID REQUEST",
+				"error":   "INVALID Request",
 				"message": "Parameter is not valid",
 			})
 			return
@@ -95,15 +95,15 @@ func CommentAuthorization() gin.HandlerFunc {
 
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
-				"error":   "NOT FOUND",
-				"message": "Comment not found",
+				"error":   "Not Found",
+				"message": "Uppss.. Comment not found",
 			})
 			return
 		}
 
 		if comment.UserID != userID {
 			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
-				"error":   "ACCESS DENIED",
+				"error":   "Access Denied",
 				"message": "You are not authorized to perform this action",
 			})
 			return
@@ -121,7 +121,7 @@ func SocialMediaAuthorization() gin.HandlerFunc {
 
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-				"error":   "INVALID REQUEST",
+				"error":   "INVALID Request",
 				"message": "Parameter is not valid",
 			})
 			return
@@ -135,15 +135,15 @@ func SocialMediaAuthorization() gin.HandlerFunc {
 
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
-				"error":   "NOT FOUND",
-				"message": "Social media not found",
+				"error":   "Not Found",
+				"message": "Uppss.. Social media not found",
 			})
 			return
 		}
 
 		if socialMedia.UserID != userID {
 			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
-				"error":   "ACCESS DENIED",
+				"error":   "Access Denied",
 				"message": "You are not authorized to perform this action",
 			})
 			return

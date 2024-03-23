@@ -10,21 +10,21 @@ import (
 
 func ValidateAge(age uint8) error {
     if age < 8 {
-        return errors.New("Age must be 8 or greater")
+        return errors.New("age must be 8 or greater")
     }
     return nil
 }
 
 func ValidateEmail(email string) error {
     if email == "" {
-        return errors.New("Email is required")
+        return errors.New("email is required")
     }
     return nil
 }
 
 func ValidateUsername(username string) error {
     if username == "" {
-        return errors.New("Username is required")
+        return errors.New("username is required")
     }
     return nil
 }
@@ -65,7 +65,7 @@ func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
 	if err := ValidateEmail(u.Email); err != nil {
         return err
     }
-	
+
 	if err := ValidateUsername(u.Username); err != nil {
         return err
     }
