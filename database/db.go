@@ -4,19 +4,20 @@ import (
 	"MyGram/models"
 	"fmt"
 	"log"
+	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var (
-	host = "localhost"
-	user = "postgres"
-	password = "saleh387"
-	dbPort   = "5433"
-	dbname   = "postgres"
-	db       *gorm.DB
-	err      error
+	host		= os.Getenv("PGHOST")
+	user		= os.Getenv("PGUSER")
+	password	= os.Getenv("PGPASSWORD")
+	dbPort		= os.Getenv("PGPORT")
+	dbname		= os.Getenv("PGDATABASE")
+	db       	*gorm.DB
+	err     	error
 )
 
 func StartDB() {
