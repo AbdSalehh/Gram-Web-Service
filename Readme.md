@@ -1,1 +1,1 @@
-Deployment masih proses :)
+https://gram-web-service-production.up.railway.app/
